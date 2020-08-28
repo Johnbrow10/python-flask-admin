@@ -1,12 +1,14 @@
 from app import db
-from uuid import UUID
-db.UUID = UUID
+import uuid
 
+
+def generate_uuid():
+    return str(uuid.uuid4())
 
 class CursoModel(db.Model):
     __tablename__ = 'Curso'
 
-    curso_id = db.Column(UUID(as_uuid=True), primary_key=True, server_default=text("uuid_generate_v4()"))
+    curso_id = db.Column(db.String(36), primary_key=True, default=generate_uuid)
     instrutor_id = db.Column(db.String(30))
     nome = db.Column(db.String(80))
     descricao_curta = db.Column(db.String(400))
