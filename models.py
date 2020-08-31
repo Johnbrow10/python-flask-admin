@@ -9,7 +9,7 @@ class CursoModel(db.Model):
     __tablename__ = 'Curso'
 
     curso_id = db.Column(db.String(36), primary_key=True, default=generate_uuid)
-    instrutor_id = db.Column(db.String(30))
+    instrutor_id = db.Column(db.Integer,db.ForeignKey('instrutor.id'),nullable=True)
     nome = db.Column(db.String(80))
     descricao_curta = db.Column(db.String(400))
     descricao_longa = db.Column(db.Text)
@@ -21,67 +21,62 @@ class CursoModel(db.Model):
     criado_em = db.Column(db.String(20))
 
 
-    def __init__(self, curso_id,instrutor_id, nome, descricao_curta, descricao_longa, url_imagem, url_video_intro, 
-    restrito, estrelas, tempo_total, criado_em):
-        self.curso_id = curso_id
-        self.instrutor_id = instrutor_id
-        self.nome = nome
-        self.descricao_curta = descricao_curta
-        self.descricao_longa = descricao_longa
-        self.url_imagem = url_imagem
-        self.url_video_intro = url_video_intro
-        self.restrito = restrito
-        self.estrelas = estrelas
-        self.tempo_total = tempo_total
-        self.criado_em = criado_em
+    def __repr__(self):
+        return self.nome
+                
+        
 
-    def json(self):
-        return {
-            'curso_id': self.curso_id,
-            'instrutor_id': self.instrutor_id,
-            'nome': self.nome,
-            'descricao_curta': self.descricao_curta,
-            'descricao_longa': self.descricao_longa,
-            'url_imagem': self.url_imagem,
-            'url_video_intro': self.url_video_intro,
-            'restrito': self.restrito,
-            'estrelas': self.estrelas,
-            'tempo_total': self.tempo_total,
-            'criado_em': self.criado_em
-        }
+    # def json(self):
+    #     return {
+    #         'curso_id': self.curso_id,
+    #         'instrutor_id': self.instrutor_id,
+    #         'nome': self.nome,
+    #         'descricao_curta': self.descricao_curta,
+    #         'descricao_longa': self.descricao_longa,
+    #         'url_imagem': self.url_imagem,
+    #         'url_video_intro': self.url_video_intro,
+    #         'restrito': self.restrito,
+    #         'estrelas': self.estrelas,
+    #         'tempo_total': self.tempo_total,
+    #         'criado_em': self.criado_em
+    #     }
         
 
     @classmethod
     def find_curso(cls, curso_id):
-        curso = cls.query.filter_by(curso_id=curso_id).first()
-        if curso:
-            return curso
-        return None
+         curso = cls.query.filter_by(curso_id=curso_id).first()
+         if curso:
+             return curso
+         return None
 
-    # def save_curso(self):
-    #     self.curso_id = str(uuid.uuid1())
-    #     db.session.add(self)
+    # def update_curso(self, instrutor_id, nome, descricao_curta, descricao_longa, url_imagem, url_video_intro, restrito, 
+    # estrelas, tempo_total, criado_em):
+    #     self.instrutor_id = instrutor_id
+    #     self.nome = nome
+    #     self.descricao_curta = descricao_curta
+    #     self.descricao_longa = descricao_longa
+    #     self.url_imagem = url_imagem
+    #     self.url_video_intro = url_video_intro
+    #     self.restrito = restrito
+    #     self.estrelas = estrelas
+    #     self.tempo_total = tempo_total
+    #     self.criado_em = criado_em
+
+    # def delete_curso(self):
+    #     db.session.delete(self)
     #     db.session.commit()
 
-    def update_curso(self, instrutor_id, nome, descricao_curta, descricao_longa, url_imagem, url_video_intro, restrito, 
-    estrelas, tempo_total, criado_em):
-        self.instrutor_id = instrutor_id
-        self.nome = nome
-        self.descricao_curta = descricao_curta
-        self.descricao_longa = descricao_longa
-        self.url_imagem = url_imagem
-        self.url_video_intro = url_video_intro
-        self.restrito = restrito
-        self.estrelas = estrelas
-        self.tempo_total = tempo_total
-        self.criado_em = criado_em
 
-    def delete_curso(self):
-        db.session.delete(self)
-        db.session.commit()
+class Instrutor(db.Model):
+    __tablename__ = 'instrutor'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(90),nullable=False)
+    curso = db.relationship('CursoModel', backref='instrutor') 
+    
 
-
-
+    def __repr__(self):
+        return self.nome
 
 
 # def current_user(user_id):
