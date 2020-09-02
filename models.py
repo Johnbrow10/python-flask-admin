@@ -1,11 +1,17 @@
-from app import db
 import uuid
+
+from app import db, login_manager
+from flask_login import UserMixin
 
 
 def generate_uuid():
     return str(uuid.uuid4())
 
-class CursoModel(db.Model):
+@login_manager.user_loader
+def current_user(user_id):
+    return User.query.get(user_id)
+    
+class CursoModel(db.Model, UserMixin):
     __tablename__ = 'Curso'
 
     curso_id = db.Column(db.String(36), primary_key=True, default=generate_uuid)
@@ -79,6 +85,17 @@ class Instrutor(db.Model):
         return self.nome
 
 
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(84),nullable=False, index=True)
+    password = db.Column(db.String(255), nullable=False)
+    
+    def __repr__(self):
+        return self.name
+        
+        
 # def current_user(user_id):
 #     return User.query.get(user_id)
 

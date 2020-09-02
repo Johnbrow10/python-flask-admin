@@ -30,7 +30,12 @@ class CursoView(ModelView):
         'restrito','estrelas','tempo_total','criado_em'
     )
     
- 
+    def is_accessible(self):
+        return current_user.is_authenticated
+    
+    def inaccessible_callback(self, name, **kwargts):
+        return redirect("/admin")
+  
 def init_app(admin):
       
     admin.add_view(CursoView(CursoModel,db.session))
