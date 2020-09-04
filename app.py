@@ -11,6 +11,7 @@ from config import Config
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+login_manager.login_view = "login.html"
 
 def create_app():
 
@@ -22,21 +23,6 @@ def create_app():
     login_manager.init_app(app)
     from models import User
         
-    @app.route("/register",methods=["GET","POST"])
-    def register():
-        if request.method == "POST":
-            user = User()
-            user.name = request.form["name"]
-            user.password = generate_password_hash(request.form["password"])
-            
-            db.session.add(user)
-            db.session.commit()
-            
-            return redirect(url_for("login"))
-            
-        return render_template("register.html")
-    
-    
     @app.route("/", methods=["GET","POST"])
     def login():
          if request.method == "POST":

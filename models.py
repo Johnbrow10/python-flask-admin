@@ -73,7 +73,7 @@ class CursoModel(db.Model, UserMixin):
     #     db.session.commit()
 
 
-class Instrutor(db.Model):
+class Instrutor(db.Model,UserMixin):
     __tablename__ = 'instrutor'
     
     id = db.Column(db.Integer, primary_key=True)
