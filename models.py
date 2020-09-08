@@ -83,6 +83,8 @@ class Instrutor(db.Model,UserMixin):
 
     def __repr__(self):
         return self.nome
+    
+    
 
 
 class User(db.Model, UserMixin):
