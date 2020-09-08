@@ -32,20 +32,20 @@ class CursoModel(db.Model, UserMixin):
                 
         
 
-    # def json(self):
-    #     return {
-    #         'curso_id': self.curso_id,
-    #         'instrutor_id': self.instrutor_id,
-    #         'nome': self.nome,
-    #         'descricao_curta': self.descricao_curta,
-    #         'descricao_longa': self.descricao_longa,
-    #         'url_imagem': self.url_imagem,
-    #         'url_video_intro': self.url_video_intro,
-    #         'restrito': self.restrito,
-    #         'estrelas': self.estrelas,
-    #         'tempo_total': self.tempo_total,
-    #         'criado_em': self.criado_em
-    #     }
+    def json(self):
+        return {
+            'curso_id': self.curso_id,
+            'instrutor_id': self.instrutor_id,
+            'nome': self.nome,
+            'descricao_curta': self.descricao_curta,
+            'descricao_longa': self.descricao_longa,
+            'url_imagem': self.url_imagem,
+            'url_video_intro': self.url_video_intro,
+            'restrito': self.restrito,
+            'estrelas': self.estrelas,
+            'tempo_total': self.tempo_total,
+            'criado_em': self.criado_em
+        }
         
 
     @classmethod
@@ -55,22 +55,22 @@ class CursoModel(db.Model, UserMixin):
              return curso
          return None
 
-    # def update_curso(self, instrutor_id, nome, descricao_curta, descricao_longa, url_imagem, url_video_intro, restrito, 
-    # estrelas, tempo_total, criado_em):
-    #     self.instrutor_id = instrutor_id
-    #     self.nome = nome
-    #     self.descricao_curta = descricao_curta
-    #     self.descricao_longa = descricao_longa
-    #     self.url_imagem = url_imagem
-    #     self.url_video_intro = url_video_intro
-    #     self.restrito = restrito
-    #     self.estrelas = estrelas
-    #     self.tempo_total = tempo_total
-    #     self.criado_em = criado_em
+    def update_curso(self, instrutor_id, nome, descricao_curta, descricao_longa, url_imagem, url_video_intro, restrito, 
+      estrelas, tempo_total, criado_em):
+         self.instrutor_id = instrutor_id
+         self.nome = nome
+         self.descricao_curta = descricao_curta
+         self.descricao_longa = descricao_longa
+         self.url_imagem = url_imagem
+         self.url_video_intro = url_video_intro
+         self.restrito = restrito
+         self.estrelas = estrelas
+         self.tempo_total = tempo_total
+         self.criado_em = criado_em
 
-    # def delete_curso(self):
-    #     db.session.delete(self)
-    #     db.session.commit()
+    def delete_curso(self):
+         db.session.delete(self)
+         db.session.commit()
 
 
 class Instrutor(db.Model,UserMixin):
@@ -95,42 +95,4 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return self.name
         
-        
-# def current_user(user_id):
-#     return User.query.get(user_id)
-
-# class User(db.Model):  
-#     __tablename__ = 'users'
-    
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(85),nullable=True)
-#     email = db.Column(db.String(85), nullable=True,unique=True, index=True )
-#     password = db.Column(db.String(255), nullable=True)
-#     tasks = db.relationship('Task', backref='user')
-#     profile = db.relationship('Profile', backref='user')
-    
-    
-#     def __repr__(self):
-#         return self.name
-    
-# class Profile(db.Model): 
-#     __tablename__ = 'profiles'
-    
-#     id = db.Column(db.Integer, primary_key=True)
-#     cpf = db.Column(db.String(20), nullable=False,unique=True, index=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-#     def __repr__(self):
-#         return self.cpf
-    
-
-# class Task(db.Model): 
-#     __tablename__ = 'tasks'
-    
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(85),nullable=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-#     def __repr__(self):
-#         return self.name
     

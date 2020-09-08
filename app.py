@@ -4,7 +4,7 @@ from werkzeug.utils import redirect
 from werkzeug.security import check_password_hash, generate_password_hash 
 from flask import Flask, render_template, request, flash     
 from flask_admin import Admin
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
